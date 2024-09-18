@@ -1,0 +1,5 @@
+torch
+torchvision
+librosa
+numpy
+matplotlib
