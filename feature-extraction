@@ -1,0 +1,19 @@
+import torch
+import torch.nn as nn
+from torchvision import models, transforms
+
+class VGG18Extractor(nn.Module):
+    def __init__(self):
+        super(VGG18Extractor, self).__init__()
+        self.vgg18 = models.vgg18(pretrained=True).features
+
+    def forward(self, x):
+        return self.vgg18(x)
+
+def preprocess_image(mel_spectrogram):
+    transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.Resize((224, 224)),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    return transform(mel_spectrogram).unsqueeze(0)
